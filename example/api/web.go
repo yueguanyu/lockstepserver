@@ -35,6 +35,14 @@ func HTTPHandleFuncCreate(w http.ResponseWriter, r *http.Request) {
 	defer func() {
 		w.Write([]byte(ret))
 	}()
+	switch r.Method {
+	case "POST", "PUT", "PATCH":
+		break
+	default:
+		w.WriteHeader(403)
+		w.Write([]byte(ret))
+		return
+	}
 
 	query := r.URL.Query()
 
